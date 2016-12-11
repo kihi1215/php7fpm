@@ -11,4 +11,13 @@ RUN set -x \
  && yum -y --enablerepo=remi-php71 install php php-fpm php-pdo php-mysqlnd \
  && yum clean all
 
-CMD ["/bin/bash"]
+RUN set -x \
+ && sed -i 's/^listen = 127\.0\.0\.1/listen = \[\:\:\]/g' /etc/php-fpm.d/www.conf \
+ && sed -i 's/^listen\.allowed\_clients/;listen\.allowed\_clients/g' /etc/php-fpm.d/www.conf
+
+
+COPY ./info.php /var/www/html
+
+EXPOSE 9000
+
+CMD ["php-fpm", "--nodaemonize"]
