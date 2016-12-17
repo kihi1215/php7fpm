@@ -17,6 +17,7 @@ RUN set -x \
 
 
 COPY ./info.php /var/www/html
+COPY ./select.php /var/www/html
 
 EXPOSE 9000
 
